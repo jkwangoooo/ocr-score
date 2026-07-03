@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ocr-score/schemas/ocr_result.schema.json",
+  "title": "EssayOCRResult",
+  "type": "object",
+  "required": [
+    "raw_provider",
+    "raw_model",
+    "raw_result",
+    "raw_text",
+    "clean_text",
+    "text_quality",
+    "quality_flags",
+    "readability_notes"
+  ],
+  "properties": {
+    "raw_provider": {
+      "type": "string",
+      "minLength": 1
+    },
+    "raw_model": {
+      "type": "string",
+      "minLength": 1
+    },
+    "raw_result": {
+      "type": ["string", "object", "array"]
+    },
+    "raw_text": {
+      "type": "string"
+    },
+    "clean_text": {
+      "type": "string"
+    },
+    "text_quality": {
+      "type": "string",
+      "enum": ["normal", "noisy", "short", "broken"]
+    },
+    "quality_flags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "short_text",
+          "anchor_missing",
+          "broken_lines",
+          "heavy_noise",
+          "possible_crop_issue",
+          "text_sparse",
+          "readability_poor"
+        ]
+      }
+    },
+    "readability_notes": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}
