@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "essay-grading/tasks/family_rules_school_rules_task_v1.json",
+  "task_spec_id": "family_rules_school_rules_task_v1",
+  "framework_id": "essay_scoring_framework_v1",
+  "version": "1.1.0",
+  "language": "en",
+  "prompt_context": {
+    "task": "Write a letter to Eric as Mary about your family rules and school rules, and express your feelings or opinions.",
+    "genre": "informal_letter",
+    "writer_role": "Mary",
+    "recipient": "Eric",
+    "core_topic": "family rules and school rules"
+  },
+  "required_task_slots": [
+    {
+      "id": "family_or_home_rules",
+      "name": "家庭规则/家规",
+      "description": "需要写出家庭或居家规则，如作息、作业、看电视、外出、家务等。",
+      "min_effective_units": 1
+    },
+    {
+      "id": "school_rules",
+      "name": "学校规则/校规",
+      "description": "需要写出学校规则，如校服、迟到、手机、零食、走廊纪律等。",
+      "min_effective_units": 1
+    },
+    {
+      "id": "feeling_or_summary",
+      "name": "感受/总结",
+      "description": "需要表达对这些规则的感受、看法或总结。",
+      "min_effective_units": 0
+    }
+  ],
+  "effective_content_unit_examples": {
+    "family_or_home_rules": [
+      "I must finish my homework first.",
+      "I can't hang out with my friends on weekdays.",
+      "I have to go to bed at 10:00."
+    ],
+    "school_rules": [
+      "I can't be late for school.",
+      "I have to wear the school uniform.",
+      "I can't use my phone in class."
+    ],
+    "feeling_or_summary": [
+      "I think these rules are awful.",
+      "These rules can help me become a better person.",
+      "No rules, no order."
+    ]
+  },
+  "task_specific_invalid_cases": [
+    {
+      "id": "irrelevant_daily_routine",
+      "description": "主体内容只是泛泛写 daily routine / advice on how to have a good day，而没有围绕 family rules 和 school rules 展开。"
+    },
+    {
+      "id": "memorized_irrelevant_material",
+      "description": "主体内容像抄阅读材料、健康建议、运动、生日礼物等，与本题无关。"
+    },
+    {
+      "id": "template_only_letter",
+      "description": "只有书信模板，没有与本题相关的正文展开。"
+    }
+  ],
+  "task_specific_caps": [
+    {
+      "id": "single_slot_only_cap",
+      "framework_cap_type": "missing_required_task_slots_cap",
+      "description": "只清楚完成了 family/home rules 或 school rules 其中一侧，另一侧缺失或极弱。",
+      "max_total_score": 17
+    },
+    {
+      "id": "effective_units_0_1_cap",
+      "framework_cap_type": "too_few_effective_content_units_cap",
+      "description": "只能稳定识别 0-1 条有效内容单元。",
+      "max_total_score": 9
+    },
+    {
+      "id": "effective_units_2_3_cap",
+      "framework_cap_type": "too_few_effective_content_units_cap",
+      "description": "只能稳定识别 2-3 条有效内容单元。",
+      "max_total_score": 14
+    },
+    {
+      "id": "keyword_only_cap",
+      "framework_cap_type": "keyword_only_relevance_cap",
+      "description": "只出现 family/school/rules 关键词，但没有形成清楚双侧展开。",
+      "max_total_score": 9
+    },
+    {
+      "id": "template_low_density_cap",
+      "framework_cap_type": "template_like_low_density_cap",
+      "description": "主题相关但模板感强、信息密度低、规则展开不足。",
+      "max_total_score": 20
+    }
+  ],
+  "band_interpretation": {
+    "24-25": "双侧覆盖充分，规则单元充足，有感受/总结，结构可跟随，虽有语言错误但主要意思清楚。",
+    "21-23": "双侧基本完整，规则较充分，局部表达或展开略弱。",
+    "18-20": "主题相关，有若干规则单元，但内容、连贯性或语言问题明显。",
+    "15-17": "可能只覆盖一侧，内容单薄，组织较乱。",
+    "10-14": "至少能识别若干有效内容单元，且不是纯关键词沾题，但展开和表达较弱。",
+    "1-9": "只沾题但无清楚规则展开，规则单元极少，大部分句子需要大量猜测。",
+    "0": "无效作文。"
+  },
+  "high_score_tolerance_notes": [
+    "高分作文允许存在较多拼写、语法、OCR 粘连错误，只要主要规则单元和整体意思仍可恢复。",
+    "不要把 must/can/do 等局部语言错误机械等同于低分。"
+  ],
+  "low_score_guardrails": [
+    "不是看到 family/school/rules 关键词就算任务成立。",
+    "不能稳定复述成规则的句子，不算有效内容单元。",
+    "如果正文大部分依赖猜测，则即使沾题也应压低到 1-9。",
+    "如果只能模糊猜到 1-2 条内容而无法稳定复述，则按 0-2 条有效内容单元处理，不得进入 10-14。",
+    "书信模板存在不等于正文成立；Dear Eric / Yours, Mary 只能说明形式像作文，不能抬高任务完成度。"
+  ]
+}

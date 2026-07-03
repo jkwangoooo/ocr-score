@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "essay-grading/schemas/grading_result.schema.json",
+  "title": "EssayGradingResult",
+  "type": "object",
+  "required": [
+    "rubric_id",
+    "invalid_essay",
+    "invalid_reason",
+    "score",
+    "band",
+    "dimension_scores",
+    "reasons",
+    "comment",
+    "review_required",
+    "review_reasons"
+  ],
+  "properties": {
+    "rubric_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "invalid_essay": {
+      "type": "boolean"
+    },
+    "invalid_reason": {
+      "type": "string"
+    },
+    "score": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 25
+    },
+    "band": {
+      "type": "string",
+      "enum": ["24-25", "21-23", "18-20", "15-17", "10-14", "1-9", "0"]
+    },
+    "dimension_scores": {
+      "type": "object",
+      "required": [
+        "relevance_theme",
+        "content_completeness",
+        "language_accuracy",
+        "structure_logic",
+        "handwriting_presentation"
+      ],
+      "properties": {
+        "relevance_theme": {"type": "integer", "minimum": 0, "maximum": 5},
+        "content_completeness": {"type": "integer", "minimum": 0, "maximum": 7},
+        "language_accuracy": {"type": "integer", "minimum": 0, "maximum": 5},
+        "structure_logic": {"type": "integer", "minimum": 0, "maximum": 5},
+        "handwriting_presentation": {"type": "integer", "minimum": 0, "maximum": 3}
+      },
+      "additionalProperties": false
+    },
+    "reasons": {
+      "type": "array",
+      "items": {"type": "string"},
+      "minItems": 1
+    },
+    "comment": {
+      "type": "string"
+    },
+    "ocr_notes": {
+      "type": "string"
+    },
+    "review_required": {
+      "type": "boolean"
+    },
+    "review_reasons": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "invalid_essay",
+          "short_text",
+          "low_readability",
+          "missing_structure_anchor",
+          "very_low_score",
+          "insufficient_visual_evidence_for_handwriting"
+        ]
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$comment": "业务规则补充：score 必须等于五个 dimension_scores 之和；invalid_essay=true 时 score 必须为 0，band 必须为 0，五个 dimension_scores 必须全部为 0。JSON Schema 不直接表达跨字段算术约束，由业务校验器负责。"
+}

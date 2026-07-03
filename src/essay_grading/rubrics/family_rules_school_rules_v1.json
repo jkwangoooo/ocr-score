@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "essay-grading/rubrics/family_rules_school_rules_v1.json",
+  "rubric_id": "family_rules_school_rules_v1",
+  "name": "Family Rules and School Rules",
+  "version": "1.0.0",
+  "language": "en",
+  "full_score": 25,
+  "prompt_context": {
+    "task": "Write a letter to Eric as Mary about your family rules and school rules, and express your feelings or opinions.",
+    "core_topic": "family rules and school rules"
+  },
+  "dimensions": [
+    {"id": "relevance_theme", "name": "切题与主题鲜明度", "max_score": 5, "description": "是否明确围绕 family rules and school rules，主题是否鲜明", "scoring_guide": {"5": "明确围绕 family rules and school rules，两个主题都清楚出现。", "4": "主题基本切合，学校规则和家庭规则都有，但其中一方面较弱。", "3": "只重点写 school rules 或 family/home rules 的一方面，另一方面缺失或很少。", "2": "泛泛写 rules 或 daily routines，和题目有弱关联，但主题不鲜明。", "1": "只有极少量 rules 相关词句，主体内容明显跑偏。", "0": "完全偏题，或只有模板开头结尾、无有效正文。"}},
+    {"id": "content_completeness", "name": "内容完整性与要点覆盖", "max_score": 7, "description": "是否覆盖学校规则、家庭规则、具体规则数量和感受/总结", "scoring_guide": {"7": "规则数量充足，至少 6 条左右；学校和家庭规则都有具体展开；有个人感受或总结。", "6": "要点较完整，有多条规则和一定细节，个别方面略弱。", "5": "有若干规则，整体较完整，但细节或一方面展开不足。", "4": "有若干规则，但内容较单薄，细节少，态度总结不明显。", "3": "只列少量规则，表达零散，缺少完整展开。", "2": "极少量有效规则内容。", "1": "几乎没有有效规则内容。", "0": "无有效规则内容。"}},
+    {"id": "language_accuracy", "name": "语言准确性", "max_score": 5, "description": "词汇、语法、时态、拼写、情态动词使用等是否正确且影响理解程度如何", "scoring_guide": {"5": "少量错误，大多数句子自然、可理解。", "4": "错误较多，但不妨碍主要意思。", "3": "错误明显，部分句子影响理解。", "2": "错误密集，只有部分内容可读。", "1": "大量词汇/语法/拼写错误，主要意思很难判断。", "0": "几乎无法形成有效英文表达。"}, "notes": ["高分作文允许存在较多拼写或语法错误，只要不影响主要理解。", "不要把少量 OCR 错误直接等同于严重语言错误。"]},
+    {"id": "structure_logic", "name": "结构与逻辑", "max_score": 5, "description": "文章结构是否清晰、逻辑是否连贯、书信格式是否完整", "scoring_guide": {"5": "书信格式完整，正文有清楚展开顺序，逻辑连贯。", "4": "格式基本完整，逻辑大体连贯，个别跳跃或重复不影响理解。", "3": "有基本结构，但段落/句间关系弱，重复或跳跃较明显。", "2": "结构混乱，句子堆砌，读者需要猜测。", "1": "只保留少量格式痕迹，正文组织很弱。", "0": "无有效结构或无法判断。"}},
+    {"id": "handwriting_presentation", "name": "书写规范性与卷面可读性", "max_score": 3, "description": "字迹是否工整、卷面是否整洁、书写是否影响识别和阅读", "scoring_guide": {"3": "书写清楚，卷面整洁，基本不影响阅读。", "2": "书写一般，有涂改或不清楚处，但大体可读。", "1": "书写潦草或涂改较多，明显影响部分识别和阅读。", "0": "书写/卷面问题严重，正文难以辨认。"}, "notes": ["如果上游只提供文本而未提供足够视觉信息，该维度应允许弱判断。"]}
+  ],
+  "invalid_rules": [
+    {"id": "template_only", "name": "只有模板无正文", "description": "只有 Dear Eric / How's it going / Yours, Mary 等模板内容，没有有效正文。", "effect": {"invalid_essay": true, "score": 0, "band": "0"}},
+    {"id": "fully_off_topic", "name": "完全偏题", "description": "完全未围绕 family rules and school rules，主体内容与题目无关。", "effect": {"invalid_essay": true, "score": 0, "band": "0"}},
+    {"id": "memorized_or_copied_irrelevant", "name": "疑似抄材料或套作且不贴题", "description": "疑似抄写阅读材料、背诵套作、套用范文，语言完整但与题目无关。", "effect": {"invalid_essay": true, "score": 0, "band": "0"}},
+    {"id": "unreadable_body", "name": "正文不可判读", "description": "正文语义极度混乱，无法判断有效内容。", "effect": {"invalid_essay": true, "score": 0, "band": "0"}}
+  ],
+  "bands": [
+    {"id": "24-25", "min": 24, "max": 25, "description": "优秀完成"},
+    {"id": "21-23", "min": 21, "max": 23, "description": "良好完成"},
+    {"id": "18-20", "min": 18, "max": 20, "description": "基本完成"},
+    {"id": "15-17", "min": 15, "max": 17, "description": "勉强完成"},
+    {"id": "10-14", "min": 10, "max": 14, "description": "低水平相关"},
+    {"id": "1-9", "min": 1, "max": 9, "description": "严重不足"},
+    {"id": "0", "min": 0, "max": 0, "description": "无效作文"}
+  ],
+  "review_rules": [
+    {"id": "invalid_essay", "description": "命中无效作文规则时必须复核"},
+    {"id": "short_text", "description": "正文过短时建议复核"},
+    {"id": "low_readability", "description": "可读性过低时建议复核"},
+    {"id": "missing_structure_anchor", "description": "书信结构锚点缺失时建议复核"},
+    {"id": "very_low_score", "description": "极低分时建议复核"},
+    {"id": "insufficient_visual_evidence_for_handwriting", "description": "缺少足够视觉信息判断书写规范性时建议复核"}
+  ]
+}

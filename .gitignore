@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+.env.*
+outputs/
+papers/
+rendered_scores_only/
+ocr_b_ppocrv6/
+rescore_v1_1/
+rescore_v2/
+image_direct_grading/
+*.har
+server.log

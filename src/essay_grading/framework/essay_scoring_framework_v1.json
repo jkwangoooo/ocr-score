@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "essay-grading/framework/essay_scoring_framework_v1.json",
+  "framework_id": "essay_scoring_framework_v1",
+  "version": "1.0.0",
+  "language": "en",
+  "architecture": {
+    "layers": ["gating", "scoring", "caps", "review"]
+  },
+  "concepts": {
+    "effective_content_unit": {
+      "definition": [
+        "能识别为与题目任务直接相关的一条具体信息单元",
+        "能归属到某个任务槽位",
+        "不是关键词碎片、空泛套话或模板化填充",
+        "能被稳定复述为一条清楚意思"
+      ]
+    }
+  },
+  "gating_rules": [
+    {
+      "id": "fully_off_topic",
+      "type": "invalid",
+      "description": "主体内容与题目任务无关。",
+      "effect": {"invalid_essay": true, "score": 0, "band": "0"}
+    },
+    {
+      "id": "memorized_or_copied_irrelevant",
+      "type": "invalid",
+      "description": "疑似抄写材料、背诵套作或套用范文，语言完整但不贴题。",
+      "effect": {"invalid_essay": true, "score": 0, "band": "0"}
+    },
+    {
+      "id": "template_only",
+      "type": "invalid",
+      "description": "只有模板开头/结尾，无有效正文。",
+      "effect": {"invalid_essay": true, "score": 0, "band": "0"}
+    },
+    {
+      "id": "unreadable_body",
+      "type": "invalid",
+      "description": "正文几乎不可判读，无法恢复有效内容。",
+      "effect": {"invalid_essay": true, "score": 0, "band": "0"}
+    },
+    {
+      "id": "task_not_established",
+      "type": "cap_entry",
+      "description": "只出现题目相关关键词，但没有形成稳定、清楚、可复述的任务展开；或无法确认多个任务槽位是否成立。",
+      "effect": {"enter_low_score_locked_zone": true}
+    }
+  ],
+  "dimensions": [
+    {
+      "id": "task_relevance_completion",
+      "name": "任务相关性与完成度",
+      "description": "是否回应题目核心、是否覆盖必要任务槽位、主题是否鲜明"
+    },
+    {
+      "id": "content_development",
+      "name": "内容展开与完整性",
+      "description": "有效内容单元数量、内容展开程度、是否有总结/说明"
+    },
+    {
+      "id": "language_accuracy",
+      "name": "语言准确性",
+      "description": "词汇、语法、时态、拼写、句法错误对理解的影响程度"
+    },
+    {
+      "id": "structure_logic",
+      "name": "结构与逻辑",
+      "description": "结构是否成立、段落组织是否清楚、句间逻辑是否可跟随、文体格式是否成立"
+    },
+    {
+      "id": "presentation_readability",
+      "name": "卷面与可读性",
+      "description": "书写/卷面/可读性是否影响识别与判断"
+    }
+  ],
+  "cap_rule_types": [
+    {
+      "id": "missing_required_task_slots_cap",
+      "description": "未覆盖所有必要任务槽位时触发封顶"
+    },
+    {
+      "id": "too_few_effective_content_units_cap",
+      "description": "有效内容单元数量不足时触发封顶"
+    },
+    {
+      "id": "keyword_only_relevance_cap",
+      "description": "仅关键词沾题、不形成清楚展开时触发封顶"
+    },
+    {
+      "id": "template_like_low_density_cap",
+      "description": "模板感强、有效信息密度低时触发封顶"
+    },
+    {
+      "id": "partial_task_completion_cap",
+      "description": "题目要求多侧/多点回答，但仅完成部分时触发封顶"
+    }
+  ],
+  "score_band_framework": {
+    "0": "无效作文或正文不可评分",
+    "1_4": "有极少量相关痕迹，但无法形成有效内容展开",
+    "5_9": "任务弱相关，仅有少量有效内容单元，远不足以构成完整回答",
+    "10_14_entry_requirement": [
+      "至少能识别若干有效内容单元",
+      "不是纯关键词沾题",
+      "内容有基本展开",
+      "主要文本仍可跟随"
+    ],
+    "high_score_principle": [
+      "高分以任务完成和内容单元完整为前提，而不是语言完美",
+      "只要语言错误不破坏主要理解，不应机械压低高分"
+    ]
+  },
+  "review_rules": [
+    {"id": "invalid_essay", "description": "命中无效作文规则时必须复核"},
+    {"id": "short_text", "description": "文本过短时建议复核"},
+    {"id": "low_readability", "description": "可读性差时建议复核"},
+    {"id": "borderline_task_slots", "description": "任务槽位覆盖边界不稳时建议复核"},
+    {"id": "too_few_effective_content_units", "description": "有效内容单元计数边界不稳时建议复核"},
+    {"id": "cap_applied", "description": "命中封顶规则时建议复核"},
+    {"id": "very_low_score", "description": "极低分时建议复核"}
+  ],
+  "result_contract": {
+    "required_fields": [
+      "framework_id",
+      "task_spec_id",
+      "invalid_essay",
+      "invalid_reason",
+      "gating",
+      "score",
+      "band",
+      "dimension_scores",
+      "caps_applied",
+      "reasons",
+      "comment",
+      "review_required",
+      "review_reasons",
+      "readability_notes"
+    ]
+  }
+}
